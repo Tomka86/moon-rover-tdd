@@ -32,3 +32,16 @@ QUnit.test("jobbra fordul (r) N → E", function(assert) {
   assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'E' });
   });
 });
+QUnit.module("Rover mozgás – E irány", function() {
+  QUnit.test("előrelépés E irányba (f): x nő", function(assert) {
+    const r = new Rover(0, 0, 'E', 5, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 1, y: 0, heading: 'E' });
+  });
+
+  QUnit.test("hátralépés E irányban (b): x csökken", function(assert) {
+    const r = new Rover(2, 0, 'E', 5, 5);
+    r.execute("b");
+    assert.deepEqual(r.state(), { x: 1, y: 0, heading: 'E' });
+  });
+});
