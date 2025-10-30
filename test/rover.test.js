@@ -15,7 +15,7 @@ QUnit.module("Rover mozgás – hátra", function() {
   QUnit.test("hátralépés N irányban (b)", function(assert) {
     const r = new Rover(0, 0, 'N', 5, 5);
     r.execute("b");
-    assert.deepEqual(r.state(), { x: 0, y: -1, heading: 'N' });
+    assert.deepEqual(r.state(), { x: 0, y: 4, heading: 'N' });
   });
 });
 QUnit.module("Rover fordulás", function() {
@@ -83,5 +83,18 @@ QUnit.module("Rover – X wrap (torusz)", function() {
     const r = new Rover(0, 0, 'W', 5, 5);
     r.execute("f");
     assert.deepEqual(r.state(), { x: 4, y: 0, heading: 'W' });
+  });
+});
+QUnit.module("Rover – Spherical wrapping (pólus flip)", function() {
+  QUnit.test("Északi pólus átlépése → heading 'S', y=0, x eltolás W/2", function(assert) {
+    const r = new Rover(0, 4, 'N', 6, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 3, y: 0, heading: 'S' });
+  });
+
+  QUnit.test("Déli pólus átlépése → heading 'N', y=H-1, x eltolás W/2", function(assert) {
+  const r = new Rover(0, 0, 'S', 6, 5);
+  r.execute("f");
+  assert.deepEqual(r.state(), { x: 3, y: 4, heading: 'N' });
   });
 });
