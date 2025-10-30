@@ -18,3 +18,10 @@ QUnit.module("Rover mozgás – hátra", function() {
     assert.deepEqual(r.state(), { x: 0, y: -1, heading: 'N' });
   });
 });
+QUnit.module("Rover fordulás", function() {
+  QUnit.test("balra fordul (l) N → W", function(assert) {
+    const r = new Rover(0, 0, 'N', 5, 5);
+    r.execute("l");
+    assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'W' });
+  });
+});
