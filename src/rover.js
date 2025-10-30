@@ -14,6 +14,7 @@ class Rover {
   execute(cmds) {
 
     const LEFT = { N: 'W', W: 'S', S: 'E', E: 'N' };
+    const RIGHT = { N:'E', E:'S', S:'W', W:'N' };
 
     for (const c of cmds) {
       if (c === 'f') {
@@ -22,6 +23,8 @@ class Rover {
         if (this.heading === 'N') this.y -= 1; 
       }else if (c === 'l') {
         this.heading = LEFT[this.heading]; 
+      }else if (c === 'r') {
+        this.heading = RIGHT[this.heading];
       }
     }
   }

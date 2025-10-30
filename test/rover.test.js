@@ -25,3 +25,10 @@ QUnit.module("Rover fordulás", function() {
     assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'W' });
   });
 });
+QUnit.module("Rover fordulás", function(){
+QUnit.test("jobbra fordul (r) N → E", function(assert) {
+  const r = new Rover(0, 0, 'N', 5, 5);
+  r.execute("r");
+  assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'E' });
+  });
+});
