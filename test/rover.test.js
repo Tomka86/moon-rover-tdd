@@ -11,3 +11,10 @@ QUnit.module("Rover mozgás", function() {
     assert.deepEqual(r.state(), { x: 0, y: 1, heading: 'N' });
   });
 });
+QUnit.module("Rover mozgás – hátra", function() {
+  QUnit.test("hátralépés N irányban (b)", function(assert) {
+    const r = new Rover(0, 0, 'N', 5, 5);
+    r.execute("b");
+    assert.deepEqual(r.state(), { x: 0, y: -1, heading: 'N' });
+  });
+});

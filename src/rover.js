@@ -15,6 +15,8 @@ class Rover {
     for (const c of cmds) {
       if (c === 'f') {
         if (this.heading === 'N') this.y += 1;
+      }else if (c === 'b') {
+        if (this.heading === 'N') this.y -= 1; 
       }
     }
   }
