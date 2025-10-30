@@ -32,6 +32,7 @@ class Rover {
       }else if (c === 'r') {
         this.heading = RIGHT[this.heading];
       }
+      this.x = ((this.x % this.W) + this.W) % this.W;
     }
   }
 }

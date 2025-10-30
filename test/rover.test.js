@@ -72,3 +72,16 @@ QUnit.module("Rover mozgás – W irány", function() {
     assert.deepEqual(r.state(), { x: 3, y: 0, heading: 'W' });
   });
 });
+QUnit.module("Rover – X wrap (torusz)", function() {
+  QUnit.test("E irányban az utolsó oszlopról előre lépve visszaugrik 0-ra", function(assert) {
+    const r = new Rover(4, 0, 'E', 5, 5); // W=5 → x ∈ [0..4]
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'E' });
+  });
+
+  QUnit.test("W irányban 0-ról előre lépve visszaugrik W-1-re", function(assert) {
+    const r = new Rover(0, 0, 'W', 5, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 4, y: 0, heading: 'W' });
+  });
+});
