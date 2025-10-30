@@ -10,6 +10,15 @@ class Rover {
   state() {
     return { x: this.x, y: this.y, heading: this.heading };
   }
+
+  execute(cmds) {
+    for (const c of cmds) {
+      if (c === 'f') {
+        if (this.heading === 'N') this.y += 1;
+      }
+    }
+  }
 }
 
 window.Rover = Rover;
+

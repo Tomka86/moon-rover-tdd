@@ -4,3 +4,10 @@ QUnit.module("Rover létrehozás", function() {
     assert.deepEqual(r.state(), { x: 0, y: 0, heading: 'N' });
   });
 });
+QUnit.module("Rover mozgás", function() {
+  QUnit.test("előrelépés N irányba (f)", function(assert) {
+    const r = new Rover(0, 0, 'N', 5, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 0, y: 1, heading: 'N' });
+  });
+});
