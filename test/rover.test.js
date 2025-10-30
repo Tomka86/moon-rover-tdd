@@ -45,3 +45,30 @@ QUnit.module("Rover mozgás – E irány", function() {
     assert.deepEqual(r.state(), { x: 1, y: 0, heading: 'E' });
   });
 });
+QUnit.module("Rover mozgás – S irány", function() {
+  QUnit.test("előrelépés S irányba (f): y csökken", function(assert) {
+    const r = new Rover(0, 2, 'S', 5, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 0, y: 1, heading: 'S' });
+  });
+
+  QUnit.test("hátralépés S irányban (b): y nő", function(assert) {
+    const r = new Rover(0, 2, 'S', 5, 5);
+    r.execute("b");
+    assert.deepEqual(r.state(), { x: 0, y: 3, heading: 'S' });
+  });
+});
+
+QUnit.module("Rover mozgás – W irány", function() {
+  QUnit.test("előrelépés W irányba (f): x csökken", function(assert) {
+    const r = new Rover(2, 0, 'W', 5, 5);
+    r.execute("f");
+    assert.deepEqual(r.state(), { x: 1, y: 0, heading: 'W' });
+  });
+
+  QUnit.test("hátralépés W irányban (b): x nő", function(assert) {
+    const r = new Rover(2, 0, 'W', 5, 5);
+    r.execute("b");
+    assert.deepEqual(r.state(), { x: 3, y: 0, heading: 'W' });
+  });
+});
