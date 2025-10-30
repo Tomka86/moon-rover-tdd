@@ -98,3 +98,17 @@ QUnit.module("Rover – Spherical wrapping (pólus flip)", function() {
   assert.deepEqual(r.state(), { x: 3, y: 4, heading: 'N' });
   });
 });
+QUnit.module("Rover – akadályérzékelés", function() {
+  QUnit.test("Akadály esetén megáll és jelenti az akadályt", function(assert) {
+    const obstacles = [{ x: 0, y: 1 }];
+    const r = new Rover(0, 0, 'N', 5, 5, obstacles);
+    const result = r.execute("f");
+
+    assert.deepEqual(result, {
+      x: 0,
+      y: 0,
+      heading: 'N',
+      obstacle: "obstacle at (0,1)"
+    });
+  });
+});

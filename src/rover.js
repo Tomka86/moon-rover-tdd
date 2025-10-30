@@ -1,10 +1,12 @@
 class Rover {
-  constructor(x, y, heading, width, height) {
+  constructor(x, y, heading, width, height, obstacles = []) {
     this.x = x;
     this.y = y;
     this.heading = heading;
     this.W = width;
     this.H = height;
+    this.obstacles = new Set(obstacles.map(o => `${o.x},${o.y}`));
+    this.obstacleReport = null;
   }
 
   state() {
@@ -15,47 +17,64 @@ class Rover {
     const LEFT  = { N: 'W', W: 'S', S: 'E', E: 'N' };
     const RIGHT = { N: 'E', E: 'S', S: 'W', W: 'N' };
 
+    this.obstacleReport = null; 
+
     for (const c of cmds) {
+      let nx = this.x;
+      let ny = this.y;
+
       if (c === 'f') {
-        if (this.heading === 'N') this.y += 1;
-        if (this.heading === 'E') this.x += 1;
-        if (this.heading === 'S') this.y -= 1;
-        if (this.heading === 'W') this.x -= 1;
+        if (this.heading === 'N') ny += 1;
+        if (this.heading === 'E') nx += 1;
+        if (this.heading === 'S') ny -= 1;
+        if (this.heading === 'W') nx -= 1;
       } else if (c === 'b') {
-        if (this.heading === 'N') this.y -= 1;
-        if (this.heading === 'E') this.x -= 1;
-        if (this.heading === 'S') this.y += 1;
-        if (this.heading === 'W') this.x += 1;
+        if (this.heading === 'N') ny -= 1;
+        if (this.heading === 'E') nx -= 1;
+        if (this.heading === 'S') ny += 1;
+        if (this.heading === 'W') nx += 1;
       } else if (c === 'l') {
         this.heading = LEFT[this.heading];
+        continue;
       } else if (c === 'r') {
         this.heading = RIGHT[this.heading];
+        continue;
       }
-      this.x = ((this.x % this.W) + this.W) % this.W;
-      if (this.heading === 'N' && this.y >= this.H) {
+      nx = ((nx % this.W) + this.W) % this.W;
+
+      if (this.heading === 'N' && ny >= this.H) {
         if (c === 'f') {
-          this.y = 0;
+          ny = 0;
           this.heading = 'S';
-          this.x = (this.x + Math.floor(this.W / 2)) % this.W;
+          nx = (nx + Math.floor(this.W / 2)) % this.W;
         } else {
-          this.y = 0;
+          ny = 0;
         }
-      } else if (this.heading === 'S' && this.y < 0) {
+      } else if (this.heading === 'S' && ny < 0) {
         if (c === 'f') {
-          this.y = this.H - 1;
+          ny = this.H - 1;
           this.heading = 'N';
-          this.x = (this.x + Math.floor(this.W / 2)) % this.W;
+          nx = (nx + Math.floor(this.W / 2)) % this.W;
         } else {
-          this.y = this.H - 1; 
+          ny = this.H - 1;
         }
       } else {
-        if (this.y < 0) this.y = this.H - 1;
-        if (this.y >= this.H) this.y = 0;
+        if (ny < 0) ny = this.H - 1;
+        if (ny >= this.H) ny = 0;
       }
+      const key = `${nx},${ny}`;
+      if (this.obstacles.has(key)) {
+        this.obstacleReport = `obstacle at (${nx},${ny})`;
+        break;
+      }
+      this.x = nx;
+      this.y = ny;
     }
+    return { ...this.state(), obstacle: this.obstacleReport };
   }
 }
 
 window.Rover = Rover;
+
 
 
